@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {Router} from './src/routes/Router';
+import { NavigationContainer } from '@react-navigation/native';
+import { Router } from './src/routes/Router';
+import { StatusBar } from 'expo-status-bar';
 
-const App = () => {
+export default function App() {
   return (
     <NavigationContainer>
+      <StatusBar style="auto" />
       <Router />
     </NavigationContainer>
   );
 };
-
-export default App;
