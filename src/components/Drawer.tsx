@@ -35,12 +35,10 @@ export function Drawer() {
                 overlay={true}
                 opacity={0.8}
             >
-                <View className="h-full w-10 static justify-center">
-                    <View className='bg-zinc-300 rounded-r-lg '>
+                <View className='bg-zinc-200 rounded-r-lg w-11 h-11'>
                     <TouchableOpacity onPress={changeMenu}>
                         <MaterialIcons name="keyboard-arrow-right" color='black' size={43} />
                     </TouchableOpacity>
-                    </View>
                 </View>
             </MenuDrawer>
         </>

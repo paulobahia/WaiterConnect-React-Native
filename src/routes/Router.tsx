@@ -5,18 +5,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Home } from '../screens/Home';
-import { Search } from '../screens/Search';
-import { Details } from '../screens/Details';
-import { Profile } from '../screens/Profile';
-import { FakeBtn } from '../screens/FakeBtn';
-
+import { Drawer1 } from '../components/Drawer1';
+import { Home, Details, AddButton, Profile, Search } from '../screens/index'
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-export function Router() {
+function TabsNavigation(navigation: any) {
     return (
         <Tabs.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
             <Tabs.Screen
@@ -28,7 +24,6 @@ export function Router() {
                     )
                 }} />
             <Tabs.Screen
-                // Botão invisível 
                 name="Search"
                 component={Search}
                 options={{
@@ -38,10 +33,15 @@ export function Router() {
                 }}
             />
             <Tabs.Screen
-                name="FakeBtn"
-                component={FakeBtn}
+                // Botão invisível 
+                name="AddButton"
+                component={AddButton}
                 listeners={{ tabPress: e => { e.preventDefault() } }}
-                options={{ tabBarShowLabel: false, tabBarIconStyle: { display: "none" } }}
+                options={{
+                    tabBarShowLabel: false, tabBarIcon: ({ color, size }) => (
+                        <AddButton />
+                    )
+                }}
             />
             <Tabs.Screen
                 name="Details"
@@ -62,5 +62,21 @@ export function Router() {
                 }}
             />
         </Tabs.Navigator>
+    )
+}
+
+function DrawerNavigation() {
+    return (
+        <Drawer.Navigator drawerContent={props => <Drawer1 />} screenOptions={{ headerShown: false }}>
+            <Drawer.Screen name='TabsNavigation' component={TabsNavigation} />
+        </Drawer.Navigator>
+    )
+}
+
+export function Router() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='Drawer' component={DrawerNavigation} />
+        </Stack.Navigator>
     );
 }
