@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Button, Image, TouchableOpacity } from 'react-native';
-import { Feather } from "@expo/vector-icons";
+import { View, Text, Image, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
+import { Feather, Octicons } from "@expo/vector-icons";
 import { getCategories } from '../services';
+import { Switch } from 'react-native';
 
 export function Drawer1() {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState()
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     useEffect(() => {
         Allcategories()
@@ -16,47 +19,61 @@ export function Drawer1() {
             .catch((err) => {
                 console.error("ops! ocorrreu um erro" + err);
             });
-        console.log(user)
     }
 
     return (
         <>
-            <View className='flex justify-start items-start h-full w-full bg-gray-800 flex-col'>
-                <View className='flex-row justify-start space-x-3 p-4 items-center'>
+            <View className='flex justify-start items-start h-full w-full bg-slate-100 flex-col'>
+                <View className='flex-row justify-start space-x-3 p-5 items-center'>
                     <Image
                         style={{ width: 35, height: 35 }}
                         source={require('../assets/logo.png')} />
-                    <Text className='text-xl text-white'>Waiter App</Text>
+                    <Text className='text-xl text-black'>Waiter App</Text>
                 </View>
+                <Text className='text-xs mb-3 ml-2 opacity-60 text-start text-black'>
+                    Categorias
+                </Text>
                 <View className='w-full border-gray-600 border-b' />
-                <View className="flex-row p-4 justify-between items-center w-full">
-                    <View className="flex-row justify-center items-center space-x-2">
+                <View className='h-4/6 border-gray-600 w-full'>
+                    <FlatList
+                        data={user}
+                        renderItem={({ item }) =>
+                        (
+                            <>
+                                <Text className='text-black font-bold p-3'>{item.name}</Text>
+                            </>
+                        )}
+                        keyExtractor={item => item.id}
+                    />
+                </View>
+                <View className='flex-1 p-4 space-y-5 w-full justify-end'>
+                    <View className='flex-row p-3 justify-between items-center'>
+                        <Octicons style={{ transform: [{ rotateY: '180deg' }] }} name="moon" size={25} color="#FFF" />
+                        <Text className='text-black font-semibold text-base'>
+                            Dark Mode
+                        </Text>
+                        <Octicons style={{ transform: [{ rotateY: '180deg' }] }} name="moon" size={25} color="#FFF" />
+                    </View>
+                    <View className='flex-row space-x-4'>
+                        <Image
+                            style={{ width: 40, height: 40 }}
+                            source={require('../assets/avatar.png')} />
                         <View>
-                            <Image
-                                style={{ width: 35, height: 35 }}
-                                source={require('../assets/avatar.png')} />
+                            <Text className='text-black text-sm'>
+                                Paulo Henrique
+                            </Text>
+                            <Text className='text-xs opacity-60 text-start text-black'>
+                                Garçom
+                            </Text>
                         </View>
-                        <View className="flex justify-start flex-col items-start">
-                            <Text className="cursor-pointer text-sm leading-5 text-white">Paulo Henrique</Text>
-                            <Text className="cursor-pointer text-xs leading-3 text-gray-300">Garçom</Text>
+                        <View className='flex-1 justify-center mr-1 items-end'>
+                            <TouchableOpacity>
+                                <Feather name="settings" size={23} color="black" />
+                            </TouchableOpacity>
                         </View>
                     </View>
-                    <TouchableOpacity>
-                        <Feather name="settings" size={20} color="#FFF" />
-                    </TouchableOpacity>
-                </View>
-                <View className='w-full h-1/2 border-gray-600'>
-                    <Text className='text-sm font-semibold leading-normal text-start ml-2 my-2 text-white'>
-                        Categorias
-                    </Text>
-                    <Text>
-                    </Text>
-                    <ScrollView showsVerticalScrollIndicator={false} className='p-3 space-y-3 text-white'>
-                        {/* <FlatList /> */}
-                    </ScrollView>
                 </View>
             </View>
-
         </>
     );
 }
