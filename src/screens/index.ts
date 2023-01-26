@@ -1,7 +1,7 @@
 import { Home } from "./Home"
-import { Details } from "./Details"
+import { Tables } from "./Tables"
 import { AddButton } from "./AddButton"
 import { Profile } from "./Profile"
 import { Search } from "./Search"
 
-export { Home, Details, AddButton, Profile, Search }
+export { Home, Tables, AddButton, Profile, Search }
