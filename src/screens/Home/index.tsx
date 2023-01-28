@@ -24,6 +24,24 @@ export function Home() {
         </View>
     )
 
+    const CardMenu = ({ data }) =>
+    (
+        <>
+            <View className='p-5 items-start'>
+                <Text className='text-base font-semibold'>{data.name}</Text>
+                {/* <FlatList
+                    className='mt-2'
+                    data={data.products}
+                    renderItem={({ item }) =>
+                    (
+                        <Text>{item.name}</Text>
+                    )}
+                    keyExtractor={item => item.id}
+                /> */}
+            </View>
+        </>
+    )
+
     return (
         <View className="flex-1 p-5 bg-slate-50">
             <View>
@@ -60,6 +78,15 @@ export function Home() {
                     renderItem={({ item }) =>
                     (
                         <CardCategories data={item} />
+                    )}
+                    keyExtractor={item => item.id}
+                />
+                <FlatList
+                    className='mt-2'
+                    data={categories}
+                    renderItem={({ item }) =>
+                    (
+                        <CardMenu data={item} />
                     )}
                     keyExtractor={item => item.id}
                 />
