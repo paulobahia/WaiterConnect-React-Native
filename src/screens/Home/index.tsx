@@ -27,8 +27,8 @@ export function Home() {
     const CardMenu = ({ data }) =>
     (
         <>
-            <View className='p-5'>
-                <View className='flex-row space-x-3 items-center'>
+            <View className='p-1'>
+                <View className='flex-row mt-3 space-x-3 items-center'>
                     <Text className='text-base font-semibold'>{data.name}</Text>
                     <View className='w-full border-neutral-300 mt-1 border-b' />
                 </View>
@@ -39,7 +39,7 @@ export function Home() {
                     (
                         <>
                             <TouchableOpacity>
-                                <View className='mt-5 shadow-red-600 shadow-2xl space-x-2 p-4 w-full flex-row bg-white rounded-xl'>
+                                <View className='mt-5 shadow-red-600 shadow-2xl space-x-3 p-4 w-full flex-row bg-white rounded-xl'>
                                     <Image
                                         style={{ width: 80, height: 80 }}
                                         source={{
@@ -52,11 +52,11 @@ export function Home() {
                                         </View>
                                         <Text className='font-bold text-base'>R$ {item.price},00</Text>
                                     </View>
-                                    <View className='absolute right-5 py-3'>
-                                        <Text>
-                                            💖
-                                        </Text>
-                                    </View>
+                                    <TouchableOpacity className='absolute m-3 right-0'>
+                                        <Image
+                                            style={{ width: 22, height: 22 }}
+                                            source={require('../../assets/icons/coracao_off.png')} />
+                                    </TouchableOpacity>
                                 </View>
                             </TouchableOpacity>
                         </>
@@ -69,15 +69,12 @@ export function Home() {
 
     return (
         <View className="flex-1 p-5 bg-neutral-100">
-            <View className='flex-row justify-between'>
-                <View className='flex-row items-center'>
+            <View className='flex-row items-center justify-between'>
+                <TouchableOpacity>
                     <Image
-                        style={{ width: 50, height: 50 }}
-                        source={require('../../assets/logo.png')} />
-                    <Text className='text-xl font-extrabold'>
-                        Connect Waiter
-                    </Text>
-                </View>
+                        style={{ width: 30, height: 30 }}
+                        source={require('../../assets/icons/menu.png')} />
+                </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.7} className='absolute right-0'>
                     <View className='bg-black p-4 items-center rounded-tr-xl rounded-tl-xl rounded-br-3xl rounded-bl-2xl justify-center'>
                         <Image
@@ -86,13 +83,21 @@ export function Home() {
                     </View>
                 </TouchableOpacity>
             </View>
-            <View style={styles.box} className='p-3 space-x-3 w-full rounded-full mt-8 mb-3 bg-white items-center justify-start flex-row'>
-                <Image
-                    className='ml-2'
-                    style={{ width: 22, height: 22 }}
-                    source={require('../../assets/icons/search.png')} />
-                <TextInput cursorColor={"#000"} className='flex w-2/3' placeholder="Pesquisar"
-                    underlineColorAndroid="transparent" />
+            <View style={styles.box} className='p-3 w-full rounded-full mt-8 mb-3 bg-white items-center justify-evenly flex-row'>
+                <View className='flex-row justify-start items-center space-x-3'>
+                    <Image
+                        style={{ width: 22, height: 22 }}
+                        source={require('../../assets/icons/search.png')} />
+                    <TextInput cursorColor={"#000"} className='flex w-3/4' placeholder="Pesquisar"
+                        underlineColorAndroid="transparent" />
+                </View>
+                <View className='ml-3'>
+                    <TouchableOpacity>
+                        <Image
+                            style={{ width: 22, height: 22 }}
+                            source={require('../../assets/icons/filter.png')} />
+                    </TouchableOpacity>
+                </View>
             </View>
             <View>
                 <FlatList

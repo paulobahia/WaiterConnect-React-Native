@@ -5,7 +5,7 @@ export function TabBar({ navigation }) {
 
     return (
         <>
-            <View className='h-28 absolute items-center bottom-0'>
+            <View className='h-28 absolute items-center justify-center left-1 bottom-0'>
                 <View className='bg-slate-900 flex-row w-11/12 rounded-3xl items-center justify-around h-3/5'>
                     <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
                         <View className='w-11 h-11 justify-center items-center rounded-full'>
