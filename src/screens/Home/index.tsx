@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, TextInput, ScrollView, SectionList } from 'react-native';
 import { getCategories } from '../../services';
 
 export function Home() {
@@ -27,51 +27,75 @@ export function Home() {
     const CardMenu = ({ data }) =>
     (
         <>
-            <View className='p-5 items-start'>
-                <Text className='text-base font-semibold'>{data.name}</Text>
-                {/* <FlatList
-                    className='mt-2'
+            <View className='p-5'>
+                <View className='flex-row space-x-3 items-center'>
+                    <Text className='text-base font-semibold'>{data.name}</Text>
+                    <View className='w-full border-neutral-300 mt-1 border-b' />
+                </View>
+                <FlatList
+                    showsHorizontalScrollIndicator={false}
                     data={data.products}
                     renderItem={({ item }) =>
                     (
-                        <Text>{item.name}</Text>
+                        <>
+                            <TouchableOpacity>
+                                <View className='mt-5 shadow-red-600 shadow-2xl space-x-2 p-4 w-full flex-row bg-white rounded-xl'>
+                                    <Image
+                                        style={{ width: 80, height: 80 }}
+                                        source={{
+                                            uri: `http://192.168.15.200:3000/uploads/${item.imagePath}`
+                                        }} />
+                                    <View className='justify-between'>
+                                        <View className='space-y-1'>
+                                            <Text className='font-normal text-black text-sm'>{item.name}</Text>
+                                            <Text className='font-normal text-gray-500 text-xs'>{item.description}</Text>
+                                        </View>
+                                        <Text className='font-bold text-base'>R$ {item.price},00</Text>
+                                    </View>
+                                    <View className='absolute right-5 py-3'>
+                                        <Text>
+                                            💖
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </>
                     )}
                     keyExtractor={item => item.id}
-                /> */}
+                />
             </View>
         </>
     )
 
     return (
-        <View className="flex-1 p-5 bg-slate-50">
-            <View>
-                <View className='flex-row justify-between'>
-                    <View className='flex-row items-center'>
-                        <Image
-                            style={{ width: 50, height: 50 }}
-                            source={require('../../assets/logo.png')} />
-                        <Text className='text-xl font-extrabold'>
-                            Connect Waiter
-                        </Text>
-                    </View>
-                    <TouchableOpacity activeOpacity={0.7}>
-                        <View className='bg-black p-4 items-center rounded-tr-xl rounded-tl-xl rounded-br-3xl rounded-bl-2xl justify-center'>
-                            <Image
-                                style={{ width: 22, height: 22 }}
-                                source={require('../../assets/icons/cart.png')} />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.box} className='p-3 space-x-3 w-full rounded-full mt-10 bg-white items-center justify-start flex-row'>
+        <View className="flex-1 p-5 bg-neutral-100">
+            <View className='flex-row justify-between'>
+                <View className='flex-row items-center'>
                     <Image
-                        className='ml-2'
-                        style={{ width: 22, height: 22 }}
-                        source={require('../../assets/icons/search.png')} />
-                    <TextInput cursorColor={"#000"} className='flex w-2/3' placeholder="Pesquisar"
-                        underlineColorAndroid="transparent" />
+                        style={{ width: 50, height: 50 }}
+                        source={require('../../assets/logo.png')} />
+                    <Text className='text-xl font-extrabold'>
+                        Connect Waiter
+                    </Text>
                 </View>
+                <TouchableOpacity activeOpacity={0.7} className='absolute right-0'>
+                    <View className='bg-black p-4 items-center rounded-tr-xl rounded-tl-xl rounded-br-3xl rounded-bl-2xl justify-center'>
+                        <Image
+                            style={{ width: 22, height: 22 }}
+                            source={require('../../assets/icons/cart.png')} />
+                    </View>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box} className='p-3 space-x-3 w-full rounded-full mt-8 mb-3 bg-white items-center justify-start flex-row'>
+                <Image
+                    className='ml-2'
+                    style={{ width: 22, height: 22 }}
+                    source={require('../../assets/icons/search.png')} />
+                <TextInput cursorColor={"#000"} className='flex w-2/3' placeholder="Pesquisar"
+                    underlineColorAndroid="transparent" />
+            </View>
+            <View>
                 <FlatList
-                    className='mt-2'
                     showsHorizontalScrollIndicator={false}
                     horizontal
                     data={categories}
@@ -81,16 +105,16 @@ export function Home() {
                     )}
                     keyExtractor={item => item.id}
                 />
-                <FlatList
-                    className='mt-2'
-                    data={categories}
-                    renderItem={({ item }) =>
-                    (
-                        <CardMenu data={item} />
-                    )}
-                    keyExtractor={item => item.id}
-                />
             </View>
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                data={categories}
+                renderItem={({ item }) =>
+                (
+                    <CardMenu data={item} />
+                )}
+                keyExtractor={item => item.id}
+            />
         </View>
     );
 }
