@@ -1,10 +1,9 @@
 import React from 'react';
-import { Ionicons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Home, Tables, Profile, Search } from '../screens/index'
+import { Home, Tables, Profile, Waiting } from '../screens/index'
 import { TabBar } from '../components/TabBar';
 
 const Stack = createNativeStackNavigator();
@@ -17,8 +16,8 @@ function TabsNavigation() {
                 name="Menu"
                 component={Home} />
             <Tabs.Screen
-                name="Search"
-                component={Search} />
+                name="Waiting"
+                component={Waiting} />
             <Tabs.Screen
                 name="Tables"
                 component={Tables} />

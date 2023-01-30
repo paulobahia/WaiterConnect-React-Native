@@ -2,6 +2,6 @@ import { Home } from "./Home"
 import { Tables } from "./Tables"
 import { AddButton } from "./AddButton"
 import { Profile } from "./Profile"
-import { Search } from "./Search"
+import { Waiting } from "./Waiting"
 
-export { Home, Tables, AddButton, Profile, Search }
+export { Home, Tables, AddButton, Profile, Waiting }

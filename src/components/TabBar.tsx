@@ -14,7 +14,7 @@ export function TabBar({ navigation }) {
                                 source={require('../assets/icons/home.png')} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Waiting')}>
                         <View className='w-11 h-11 justify-center items-center rounded-full'>
                             <Image
                                 style={{ width: 24, height: 24 }}
