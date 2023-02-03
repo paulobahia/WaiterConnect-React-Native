@@ -31,7 +31,7 @@ export function Cart(props) {
                             <View className='flex items-center justify-center'>
                                 <View className='flex-row'>
                                     <Text> Name: {item.name} </Text>
-                                    <Text> Quantidade: {item.times} </Text>
+                                    <Text> Quantidade: {item.quantity} </Text>
                                     <Text> Preço: R$ {item.price},00 </Text>
                                 </View>
                             </View>

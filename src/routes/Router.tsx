@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -9,12 +9,21 @@ import { TabBar } from '../components/TabBar';
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
+
 function TabsNavigation() {
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    const HandlerSheet = (item) => {
+        setIsOpen(item)
+    }
+
     return (
-        <Tabs.Navigator tabBar={props => <TabBar {...props} />} screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+        <Tabs.Navigator tabBar={props => <TabBar BottomSheet={isOpen} {...props} />} screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
             <Tabs.Screen
                 name="Menu"
-                component={Home} />
+                children={props => <Home {...props} ChangeSheet={HandlerSheet} />}
+            />
             <Tabs.Screen
                 name="Waiting"
                 component={Waiting} />

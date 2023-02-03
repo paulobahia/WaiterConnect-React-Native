@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, TouchableOpacity, Image, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Image } from 'react-native';
 
-export function TabBar({ navigation }) {
+export function TabBar({ navigation, BottomSheet }) {
 
     return (
         <>
-            <View className='h-28 absolute items-center justify-center left-1 bottom-0'>
+            {!BottomSheet ? <View className='h-28 absolute items-center justify-center left-1 bottom-0'>
                 <View className='bg-slate-900 flex-row w-11/12 rounded-3xl items-center justify-around h-3/5'>
                     <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
                         <View className='w-11 h-11 justify-center items-center rounded-full'>
@@ -36,7 +36,7 @@ export function TabBar({ navigation }) {
                         </View>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View> : null}
         </>
     );
 }

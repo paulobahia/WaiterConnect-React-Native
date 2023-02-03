@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 export function ListMenu(props) {
-    
+
     const CardMenu = ({ data }) =>
     (
         <>
@@ -17,7 +17,7 @@ export function ListMenu(props) {
                     renderItem={({ item }) =>
                     (
                         <>
-                            <TouchableOpacity onPress={() => props.handlerResult(item)}>
+                            <TouchableOpacity delayLongPress={200} onPress={() => props.handlerResult(item)} onLongPress={() => props.handlerBottomResult(item)}>
                                 <View className='mt-5 shadow-red-600 shadow-2xl space-x-3 p-4 w-full flex-row bg-white rounded-xl'>
                                     <Image
                                         style={{ width: 80, height: 80 }}
