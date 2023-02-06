@@ -6,7 +6,7 @@ export function ListMenu(props) {
     const CardMenu = ({ data }) =>
     (
         <>
-            <View className='p-1'>
+            <View className='p-5'>
                 <View className='flex-row mt-3 space-x-3 items-center'>
                     <Text className='text-base font-semibold'>{data.name}</Text>
                     <View className='w-full border-neutral-300 mt-1 border-b' />
@@ -17,8 +17,8 @@ export function ListMenu(props) {
                     renderItem={({ item }) =>
                     (
                         <>
-                            <TouchableOpacity delayLongPress={200} onPress={() => props.handlerResult(item)} onLongPress={() => props.handlerBottomResult(item)}>
-                                <View className='mt-5 shadow-red-600 shadow-2xl space-x-3 p-4 w-full flex-row bg-white rounded-xl'>
+                            <TouchableOpacity delayLongPress={150} onPress={() => props.handlerResult(item)} onLongPress={() => props.handlerBottomResult(item)}>
+                                <View className='mt-5 space-x-3 p-4 w-full flex-row bg-white rounded-xl'>
                                     <Image
                                         style={{ width: 80, height: 80 }}
                                         source={{
@@ -31,11 +31,6 @@ export function ListMenu(props) {
                                         </View>
                                         <Text className='font-bold text-base'>R$ {item.price},00</Text>
                                     </View>
-                                    <TouchableOpacity className='absolute m-3 right-0'>
-                                        <Image
-                                            style={{ width: 22, height: 22 }}
-                                            source={require('../../../assets/icons/coracao_off.png')} />
-                                    </TouchableOpacity>
                                 </View>
                             </TouchableOpacity>
                         </>
@@ -60,17 +55,3 @@ export function ListMenu(props) {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    box: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
-    },
-});

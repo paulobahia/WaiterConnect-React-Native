@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, TextInput, Text } from 'react-native';
+import { View, Image, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Text } from 'react-native';
 import { getCategories } from '../../services';
 import { ListCategories } from './components/ListCategories';
 import { ListMenu } from './components/ListMenu';
+import { SheetComponent } from './components/SheetComponent';
+
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Feather, AntDesign } from '@expo/vector-icons';
 
 export function Home(props) {
 
@@ -15,11 +18,15 @@ export function Home(props) {
     const sheetRef = useRef<BottomSheet>(null)
     const [isOpen, setIsOpen] = useState(false)
 
-    const snapPoints = ['50%', '90%']
+    const snapPoints = ['90%']
 
     useEffect(() => {
         getCategories()
-            .then((response) => setCategories(response.data))
+            .then((response) => {
+                let Categories = response.data
+                Categories.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0));
+                setCategories(Categories)
+            })
             .catch((err) => {
                 console.error("Erro: " + err);
             });
@@ -30,7 +37,7 @@ export function Home(props) {
         setTimeout(() => {
             setIsOpen(true)
         }, 200)
-    }, [])
+    }, [isOpen])
 
     const itemHandler = (item) => {
         setItensCart(prevItensCart => [...prevItensCart, item])
@@ -50,48 +57,34 @@ export function Home(props) {
     }
 
     return (
-        <GestureHandlerRootView className="flex-1 p-5 bg-neutral-100">
-            <View className='flex-row items-center justify-between'>
-                <TouchableOpacity>
-                    <Image
-                        style={{ width: 30, height: 30 }}
-                        source={require('../../assets/icons/menu.png')} />
-                </TouchableOpacity>
-                <View className='ml-3'>
-                    <TouchableOpacity>
-                        <Image
-                            style={{ width: 30, height: 30 }}
-                            source={require('../../assets/icons/menu.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Cart', itensCart)} activeOpacity={0.7} className='absolute right-0'>
-                        <View className='bg-slate-900 p-4 items-center rounded-tr-xl rounded-tl-xl rounded-br-3xl rounded-bl-2xl justify-center'>
-                            <Image
-                                style={{ width: 22, height: 22 }}
-                                source={require('../../assets/icons/cart.png')} />
-                            {itensCart.length != 0 ? <View className='bg-red-600 w-6 h-6 left-9 bottom-9 absolute items-center justify-center  rounded-full'>
-                                <Text className='text-white text-xs font-bold'>
+        <GestureHandlerRootView className="flex-1 bg-neutral-200">
+            <View className='bg-neutral-900 p-5 rounded-b-3xl'>
+                <View className='absolute left-5 top-8'>
+                    <Text className='text-white font-medium text-2xl'>
+                        Waiter Connect
+                    </Text>
+                </View>
+                <View className='absolute right-5 top-8'>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('Cart', itensCart)} activeOpacity={0.7} >
+                        <View className='bg-lime-400 flex-row space-x-2 w-14 h-10 rounded-lg items-center justify-center'>
+                            <Feather name="shopping-cart" size={23} color="black" />
+                            {itensCart.length != 0 ?
+                                <Text className='text-black text-lg font-bold'>
                                     {itensCart.length}
                                 </Text>
-                            </View> : null}
+                                : null}
                         </View>
                     </TouchableOpacity>
                 </View>
-            </View>
-            <View>
-                <Text className='text-center'>
-                </Text>
-            </View>
-            <View style={styles.box} className='p-3 w-full rounded-full mt-8 mb-3 bg-white items-center justify-evenly flex-row'>
-                <View className='flex-row justify-start items-center space-x-3'>
-                    <Image
-                        style={{ width: 22, height: 22 }}
-                        source={require('../../assets/icons/search.png')} />
-                    <TextInput cursorColor={"#000"} className='flex w-3/4' placeholder="Pesquisar"
-                        underlineColorAndroid="transparent" />
+                <View style={styles.box} className='p-3 w-full rounded-xl mt-20 bg-neutral-600 items-center  flex-row'>
+                    <View className='flex-row justify-start space-x-5 items-center'>
+                        <AntDesign name="search1" size={24} color="#c0c0c0" />
+                        <TextInput cursorColor={"#000"} className='flex w-3/4' placeholderTextColor={'#c0c0c0'} placeholder="Pesquise por algo gostoso..."
+                            underlineColorAndroid="transparent" />
+                    </View>
                 </View>
-
             </View>
-            <View>
+            <View className='mb-3'>
                 <ListCategories data={categories} />
             </View>
             <ListMenu data={categories} handlerResult={itemHandler} handlerBottomResult={itemHandlerBottomSheet} />
@@ -101,18 +94,10 @@ export function Home(props) {
                 enablePanDownToClose={true}
                 onClose={HandlerBottomSheet}
                 index={-1}
+                style={{ borderRadius: 30, overflow: 'hidden' }}
             >
                 <BottomSheetView>
-                    <View className='flex items-center justify-center'>
-                        <Image
-                            style={{ width: 100, height: 100 }}
-                            source={{
-                                uri: `http://192.168.15.200:3000/uploads/${itemBottomSheet?.imagePath}`
-                            }} />
-                        <Text>
-                            {itemBottomSheet?.name}
-                        </Text>
-                    </View>
+                    <SheetComponent handlerResult={itemHandler} item={itemBottomSheet} />
                 </BottomSheetView>
             </BottomSheet>
         </GestureHandlerRootView>

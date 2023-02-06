@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -14,9 +14,9 @@ function TabsNavigation() {
 
     const [isOpen, setIsOpen] = useState(false)
 
-    const HandlerSheet = (item) => {
+    const HandlerSheet = useCallback((item) => {
         setIsOpen(item)
-    }
+    }, [isOpen])
 
     return (
         <Tabs.Navigator tabBar={props => <TabBar BottomSheet={isOpen} {...props} />} screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
