@@ -16,13 +16,33 @@ export function Cart(props) {
     }, []);
 
     useEffect(() => {
-        var totalCart = itensCart.reduce((prevVal, currentVal) => {
-            return prevVal + currentVal.price
+        var totalCart = listCart.reduce((prevVal, currentVal) => {
+            return prevVal + currentVal.price * currentVal.quantity
         }, 0)
         setTotalCart(totalCart)
-    }, [])
+    }, [listCart])
 
-    console.log(listCart)
+    const handlerItemOfCart = (item_id, type) => {
+
+        switch (type) {
+
+            case 'increment':
+                setListCart(listCart => listCart.map((item) => item_id === item.id ? { ...item, quantity: item.quantity + 1 } : item))
+                break;
+
+            case 'decrement':
+                setListCart(listCart => listCart.map((item) => item_id === item.id ? { ...item, quantity: item.quantity - 1 } : item))
+                break;
+
+            case 'remove':
+                setListCart(listCart.filter(item => item.id !== item_id))
+                break;
+
+            default:
+                break;
+        }
+
+    }
 
     const CartList = ({ data }) => {
         return (
@@ -39,13 +59,15 @@ export function Cart(props) {
                     <View className='items-center w-full space-x-28 flex-row'>
                         <View className='bg-gray-200 rounded-xl flex items-center w-1/3 justify-center h-10'>
                             <View className='flex-row items-center space-x-3'>
-                                <TouchableOpacity >
+                                {data.quantity != 1 ? <TouchableOpacity onPress={() => handlerItemOfCart(data.id, 'decrement')}>
                                     <AntDesign name="minus" size={20} color='black' />
-                                </TouchableOpacity>
+                                </TouchableOpacity> : <TouchableOpacity onPress={() => handlerItemOfCart(data.id, 'remove')}>
+                                    <Ionicons name="ios-trash-outline" size={20} color="red" />
+                                </TouchableOpacity>}
                                 <Text className='text-lg font-medium'>
                                     {data.quantity}
                                 </Text>
-                                <TouchableOpacity >
+                                <TouchableOpacity onPress={() => handlerItemOfCart(data.id, 'increment')}>
                                     <AntDesign name="plus" size={20} color="black" />
                                 </TouchableOpacity>
                             </View>
@@ -84,6 +106,7 @@ export function Cart(props) {
                 />
                     : null}
             </View>
+
             <View className='px-4'>
                 <View className='w-full border-neutral-400 border-b' />
             </View>
@@ -107,17 +130,3 @@ export function Cart(props) {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    box: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
-    },
-});

@@ -31,7 +31,7 @@ export function SheetComponent({ item, handlerResult }) {
                     }} />
             </View>
             <View className='items-start p-5'>
-                <Text className='font-medium text-4xl'>
+                <Text numberOfLines={1} adjustsFontSizeToFit={true} className='font-medium w-full text-4xl'>
                     {item?.name}
                 </Text>
                 <Text className='font-normal text-gray-300 text-sm'>
