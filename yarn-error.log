@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Paulo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/react-native-circle-list
+  C:\Program Files\nodejs\node.exe C:\Users\Paulo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add jwt-decode
 
 PATH: 
   C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Docker\Docker\resources\bin;C:\Users\Paulo\AppData\Local\Microsoft\WindowsApps;C:\Users\Paulo\AppData\Roaming\npm;C:\Users\Paulo\AppData\Local\Programs\Microsoft VS Code\bin
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-native-circle-list: Not found
-      at Request.params.callback [as _callback] (C:\Users\Paulo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
-      at Request.self.callback (C:\Users\Paulo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
-      at Request.emit (node:events:513:28)
-      at Request.<anonymous> (C:\Users\Paulo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141862:10)
-      at Request.emit (node:events:513:28)
-      at IncomingMessage.<anonymous> (C:\Users\Paulo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141784:12)
-      at Object.onceWrapper (node:events:627:28)
-      at IncomingMessage.emit (node:events:525:35)
-      at endReadableNT (node:internal/streams/readable:1358:12)
-      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+  Error: ENOTEMPTY: directory not empty, rmdir 'C:\Users\Paulo\AppData\Local\Yarn\Cache\v6\npm-@babel-types-7.20.7-integrity\node_modules\@babel\types'
 
 npm manifest: 
   {
@@ -47,11 +37,12 @@ npm manifest:
       "expo": "~47.0.12",
       "expo-screen-orientation": "~5.0.1",
       "expo-status-bar": "~1.4.2",
+      "lottie-react-native": "5.1.4",
       "nativewind": "^2.0.11",
       "react": "18.1.0",
       "react-dom": "18.1.0",
+      "react-hook-form": "^7.43.1",
       "react-native": "0.70.5",
-      "react-native-circle-list": "^0.1.33",
       "react-native-gesture-handler": "~2.8.0",
       "react-native-reanimated": "~2.12.0",
       "react-native-safe-area-context": "4.4.1",
@@ -62,6 +53,7 @@ npm manifest:
     },
     "devDependencies": {
       "@babel/core": "^7.12.9",
+      "@types/jsonwebtoken": "^9.0.1",
       "@types/react": "~18.0.14",
       "@types/react-native": "~0.70.6",
       "@types/styled-components-react-native": "^5.2.1",
@@ -1469,7 +1461,7 @@ Lockfile:
   
   "@gorhom/bottom-sheet@4":
     version "4.4.5"
-    resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.4.5.tgz#b9041b01ce1af9a936e7c0fc1d78f026d759eebe"
+    resolved "https://registry.npmjs.org/@gorhom/bottom-sheet/-/bottom-sheet-4.4.5.tgz"
     integrity sha512-Z5Z20wshLUB8lIdtMKoJaRnjd64wBR/q8EeVPThrg+skrcBwBPHfUwZJ2srB0rEszA/01ejSJy/ixyd7Ra7vUA==
     dependencies:
       "@gorhom/portal" "1.0.14"
@@ -1477,7 +1469,7 @@ Lockfile:
   
   "@gorhom/portal@1.0.14":
     version "1.0.14"
-    resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.14.tgz#1953edb76aaba80fb24021dc774550194a18e111"
+    resolved "https://registry.npmjs.org/@gorhom/portal/-/portal-1.0.14.tgz"
     integrity sha512-MXyL4xvCjmgaORr/rtryDNFy3kU4qUbKlwtQqqsygd0xX3mhKjOLn6mQK8wfu0RkoE0pBE0nAasRoHua+/QZ7A==
     dependencies:
       nanoid "^3.3.1"
@@ -1956,6 +1948,13 @@ Lockfile:
     dependencies:
       "@types/istanbul-lib-report" "*"
   
+  "@types/jsonwebtoken@^9.0.1":
+    version "9.0.1"
+    resolved "https://registry.npmjs.org/@types/jsonwebtoken/-/jsonwebtoken-9.0.1.tgz"
+    integrity sha512-c5ltxazpWabia/4UzhIoaDcIza4KViOQhdbjRlfcIGVnsE3c3brkz9Z+F/EeJIECOQP7W7US2hNE930cWWkPiw==
+    dependencies:
+      "@types/node" "*"
+  
   "@types/node@*":
     version "18.11.18"
     resolved "https://registry.npmjs.org/@types/node/-/node-18.11.18.tgz"
@@ -2274,9 +2273,9 @@ Lockfile:
     integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
   
   axios@^1.2.3:
-    version "1.2.3"
-    resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.3.tgz#31a3d824c0ebf754a004b585e5f04a5f87e6c4ff"
-    integrity sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==
+    version "1.3.3"
+    resolved "https://registry.npmjs.org/axios/-/axios-1.3.3.tgz"
+    integrity sha512-eYq77dYIFS77AQlhzEL937yUBSepBfPIe8FcgEDN35vMNZKMrs81pgnyrQpwfy4NF4b4XWX1Zgx7yX+25w8QJA==
     dependencies:
       follow-redirects "^1.15.0"
       form-data "^4.0.0"
@@ -2536,6 +2535,11 @@ Lockfile:
     dependencies:
       buffer-alloc-unsafe "^1.1.0"
       buffer-fill "^1.0.0"
+  
+  buffer-equal-constant-time@1.0.1:
+    version "1.0.1"
+    resolved "https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz"
+    integrity sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==
   
   buffer-fill@^1.0.0:
     version "1.0.0"
@@ -3094,6 +3098,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.2.2.tgz"
     integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
   
+  dedent@^0.6.0:
+    version "0.6.0"
+    resolved "https://registry.npmjs.org/dedent/-/dedent-0.6.0.tgz"
+    integrity sha512-cSfRWjXJtZQeRuZGVvDrJroCR5V2UvBNUMHsPCdNYzuAG8b9V8aAy3KUcdQrGQPXs17Y+ojbPh1aOCplg9YR9g==
+  
   deep-extend@^0.6.0:
     version "0.6.0"
     resolved "https://registry.npmjs.org/deep-extend/-/deep-extend-0.6.0.tgz"
@@ -3240,6 +3249,13 @@ Lockfile:
       dom-serializer "^2.0.0"
       domelementtype "^2.3.0"
       domhandler "^5.0.1"
+  
+  ecdsa-sig-formatter@1.0.11:
+    version "1.0.11"
+    resolved "https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz"
+    integrity sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==
+    dependencies:
+      safe-buffer "^5.0.1"
   
   ee-first@1.1.1:
     version "1.1.1"
@@ -3678,7 +3694,7 @@ Lockfile:
   
   follow-redirects@^1.15.0:
     version "1.15.2"
-    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
+    resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
     integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
   
   fontfaceobserver@^2.1.0:
@@ -3702,7 +3718,7 @@ Lockfile:
   
   form-data@^4.0.0:
     version "4.0.0"
-    resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
+    resolved "https://registry.npmjs.org/form-data/-/form-data-4.0.0.tgz"
     integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
     dependencies:
       asynckit "^0.4.0"
@@ -4087,7 +4103,7 @@ Lockfile:
       default-gateway "^4.2.0"
       ipaddr.js "^1.9.0"
   
-  invariant@^2.2.4:
+  invariant@^2.2.2, invariant@^2.2.4:
     version "2.2.4"
     resolved "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
     integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -4538,6 +4554,33 @@ Lockfile:
     optionalDependencies:
       graceful-fs "^4.1.6"
   
+  jsonwebtoken@^9.0.0:
+    version "9.0.0"
+    resolved "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.0.tgz"
+    integrity sha512-tuGfYXxkQGDPnLJ7SibiQgVgeDgfbPq2k2ICcbgqW8WxWLBAxKQM/ZCu/IT8SOSwmaYl4dpTFCW5xZv7YbbWUw==
+    dependencies:
+      jws "^3.2.2"
+      lodash "^4.17.21"
+      ms "^2.1.1"
+      semver "^7.3.8"
+  
+  jwa@^1.4.1:
+    version "1.4.1"
+    resolved "https://registry.npmjs.org/jwa/-/jwa-1.4.1.tgz"
+    integrity sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==
+    dependencies:
+      buffer-equal-constant-time "1.0.1"
+      ecdsa-sig-formatter "1.0.11"
+      safe-buffer "^5.0.1"
+  
+  jws@^3.2.2:
+    version "3.2.2"
+    resolved "https://registry.npmjs.org/jws/-/jws-3.2.2.tgz"
+    integrity sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==
+    dependencies:
+      jwa "^1.4.1"
+      safe-buffer "^5.0.1"
+  
   kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
     version "3.2.2"
     resolved "https://registry.npmjs.org/kind-of/-/kind-of-3.2.2.tgz"
@@ -4661,6 +4704,14 @@ Lockfile:
     integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
     dependencies:
       js-tokens "^3.0.0 || ^4.0.0"
+  
+  lottie-react-native@5.1.4:
+    version "5.1.4"
+    resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-5.1.4.tgz#9340a4f63ed115d5f050f1af69e53242e6e63840"
+    integrity sha512-Lu6mSG92Wck+vXEX6gfj/9ciqqoz0tJQZqgX0SumGvX/oZu4MbKO/oLApyHdy2V9Rb7qvwF9whOtitADxTswPA==
+    dependencies:
+      invariant "^2.2.2"
+      react-native-safe-modules "^1.0.3"
   
   lru-cache@^5.1.1:
     version "5.1.1"
@@ -5812,7 +5863,7 @@ Lockfile:
   
   proxy-from-env@^1.1.0:
     version "1.1.0"
-    resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+    resolved "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
     integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
   
   pump@^3.0.0:
@@ -5906,6 +5957,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/react-freeze/-/react-freeze-1.0.3.tgz"
     integrity sha512-ZnXwLQnGzrDpHBHiC56TXFXvmolPeMjTn1UOm610M4EXGzbEDR7oOIyS2ZiItgbs6eZc4oU/a0hpk8PrcKvv5g==
   
+  react-hook-form@^7.43.1:
+    version "7.43.1"
+    resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.43.1.tgz"
+    integrity sha512-+s3+s8LLytRMriwwuSqeLStVjRXFGxgjjx2jED7Z+wz1J/88vpxieRQGvJVvzrzVxshZ0BRuocFERb779m2kNg==
+  
   "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^17.0.1:
     version "17.0.2"
     resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
@@ -5920,11 +5976,6 @@ Lockfile:
     version "18.2.0"
     resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
     integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
-  
-  react-native-circle-list@^0.1.33:
-    version "0.1.33"
-    resolved "https://registry.yarnpkg.com/react-native-circle-list/-/react-native-circle-list-0.1.33.tgz#23a51736cf31fce8b0a07f4df157d556b13c3517"
-    integrity sha512-4jTJXkrcMxlEIYJkyCISiKr1uW517ycAjKoenz/+2S5reGceu1EGIR9zRnZZ3o6KRMPqq91esOeXSg+TWbGqlw==
   
   react-native-codegen@^0.70.6:
     version "0.70.6"
@@ -5969,6 +6020,13 @@ Lockfile:
     version "4.4.1"
     resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-4.4.1.tgz"
     integrity sha512-N9XTjiuD73ZpVlejHrUWIFZc+6Z14co1K/p1IFMkImU7+avD69F3y+lhkqA2hN/+vljdZrBSiOwXPkuo43nFQA==
+  
+  react-native-safe-modules@^1.0.3:
+    version "1.0.3"
+    resolved "https://registry.npmjs.org/react-native-safe-modules/-/react-native-safe-modules-1.0.3.tgz"
+    integrity sha512-DUxti4Z+AgJ/ZsO5U7p3uSCUBko8JT8GvFlCeOXk9bMd+4qjpoDvMYpfbixXKgL88M+HwmU/KI1YFN6gsQZyBA==
+    dependencies:
+      dedent "^0.6.0"
   
   react-native-screens@~3.18.0:
     version "3.18.2"
@@ -6317,7 +6375,7 @@ Lockfile:
     dependencies:
       queue-microtask "^1.2.2"
   
-  safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+  safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
     version "5.1.2"
     resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz"
     integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
@@ -6366,7 +6424,7 @@ Lockfile:
     resolved "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
     integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
   
-  semver@^7.3.5:
+  semver@^7.3.5, semver@^7.3.8:
     version "7.3.8"
     resolved "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz"
     integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==

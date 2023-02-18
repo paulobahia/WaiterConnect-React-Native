@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 
 export function TabBar({ navigation, BottomSheet }) {
 
