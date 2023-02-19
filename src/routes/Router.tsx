@@ -9,7 +9,6 @@ import { TabBar } from '../components/TabBar';
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-
 function TabsNavigation() {
 
     const [isOpen, setIsOpen] = useState(false)

@@ -11,3 +11,7 @@ export const getAccountsByWaiter = (payload) => {
 export const authAccount = (payload) => {
     return http.post('/api/accounts/auth', payload)
 }
+
+export const authUser = (payload) => {
+    return http.post('/api/users/auth', payload)
+}
