@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { authAccount } from '../../services';
 import { View, Text, ImageBackground, Image, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import { useForm, Controller } from 'react-hook-form'
 import Lottie from 'lottie-react-native';
+import { useAuth } from '../../context';
 
 export function SignIn({ navigation }) {
 
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const { signInAccount } = useAuth()
 
     type FormData = {
         email: string;
         password: string;
     }
-
 
     useEffect(() => {
 
@@ -39,23 +39,18 @@ export function SignIn({ navigation }) {
 
     const { control, handleSubmit } = useForm<FormData>()
 
-    const onSubmit = (data: FormData) => {
+    async function onSubmit(data: FormData) {
         setIsLoading(true)
-
-        let postData = {
-            email: data.email,
-            password: data.password
+        try {
+            const AuthAccount = await signInAccount(data.email, data.password)
+            navigation.navigate('Waiter Selection', AuthAccount.data)
+            setIsLoading(false)
+        } catch (error) {
+            console.error(error);
+            setIsLoading(false)
         }
 
-        authAccount(postData)
-            .then((response) => {
-                navigation.navigate('Waiter Selection', response.data)
-                setIsLoading(false)
-            })
-            .catch((err) => {
-                console.error(err.response.data);
-                setIsLoading(false)
-            });
+        setIsLoading(false)
     }
 
     return (

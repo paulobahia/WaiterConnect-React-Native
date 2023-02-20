@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, Image, Modal, StyleSheet } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode'
 import Carousel from 'react-native-snap-carousel';
 
-import { authUser, getAccountsByWaiter } from '../../services';
+import { getAccountsByWaiter } from '../../services';
 import { TextInput } from 'react-native-gesture-handler';
+import { AuthAccountData, useAuth } from '../../context';
 
 const SLIDER_WIDTH = Dimensions.get('window').width
 const ITEM_WIDTH = SLIDER_WIDTH * 0.88
@@ -19,30 +21,20 @@ export function WaiterSelection(props) {
     const [isWaiters, setIsWaiters] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const [isWaiter, setIsWaiter] = useState([])
-
-    const Items = [
-        {
-            img: 'https://img.freepik.com/icones-gratis/garcom_318-198107.jpg'
-        },
-        {
-            img: 'https://img.freepik.com/icones-gratis/avatar_318-198106.jpg'
-        },
-        {
-            img: 'https://img.freepik.com/icones-gratis/garcom_318-198105.jpg'
-        }
-    ]
+    const { signInWaiter, authAccountData } = useAuth()
 
     useEffect(() => {
 
-        let token: tokenData = jwtDecode(props.route.params.token)
-
-        getAccountsByWaiter(token.id)
-            .then((response) => {
-                setIsWaiters(response.data)
-            })
-            .catch((err) => {
-                console.error(err.response.data);
-            });
+        if (authAccountData) {
+            let token: tokenData = jwtDecode(authAccountData.token)
+            getAccountsByWaiter(token.id)
+                .then((response) => {
+                    setIsWaiters(response.data)
+                })
+                .catch((err) => {
+                    console.error(err.response.data);
+                });
+        }
 
     }, []);
 
@@ -53,20 +45,13 @@ export function WaiterSelection(props) {
 
     function authWaiter() {
 
-        let postData = {
-            cpf: isWaiter?.cpf,
-            password: "12345678"
-        }
-
-        authUser(postData)
+        signInWaiter(isWaiter?.cpf, "12345678")
             .then((response) => {
-                console.log(response.data)
-                props.navigation.navigate("Home")
+                props.navigation.navigate("AuthStack")
             })
             .catch((err) => {
                 console.error(err.response.data);
             });
-
     }
 
     const CardCategories = ({ item, index }) =>

@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Home, Tables, Profile, Waiting, Cart, SignIn, WaiterSelection } from '../screens/index'
 import { TabBar } from '../components/TabBar';
+import { useAuth } from '../context/index';;
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -36,13 +37,29 @@ function TabsNavigation() {
     )
 }
 
-export function Router() {
+function SignInStack() {
+    const { authAccountData } = useAuth()
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name='Sign in' component={SignIn} />
-            <Stack.Screen name='Waiter Selection' component={WaiterSelection} />
+            {authAccountData ? <Stack.Screen name='Waiter Selection' component={WaiterSelection} /> : <Stack.Screen name='Sign in' component={SignIn} />}
+        </Stack.Navigator>
+    )
+}
+
+function AuthStack() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name='Home' component={TabsNavigation} />
             <Stack.Screen name='Cart' component={Cart} />
+        </Stack.Navigator>
+    )
+}
+
+export function Router() {
+    const { authWaiterData } = useAuth()
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {authWaiterData ? <Stack.Screen name='AuthStack' component={AuthStack} /> : <Stack.Screen name='Sign in Stack' component={SignInStack} />}
         </Stack.Navigator>
     );
 }
