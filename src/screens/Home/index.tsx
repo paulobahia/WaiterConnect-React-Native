@@ -8,12 +8,14 @@ import { SheetComponent } from './components/SheetComponent';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Feather, AntDesign } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 
 export function Home(props) {
 
     const [categories, setCategories] = useState(null)
     const [itensCart, setItensCart] = useState([])
     const [itemBottomSheet, setItemBottomSheet] = useState()
+    const isFocused = useIsFocused();
 
     const sheetRef = useRef<BottomSheet>(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -31,6 +33,10 @@ export function Home(props) {
                 console.error("Erro: " + err);
             });
     }, []);
+
+    useEffect(() => {
+        isFocused
+    }, [isFocused])
 
     const handlerSnapPress = useCallback((index) => {
         sheetRef.current?.snapToIndex(index)
@@ -51,6 +57,29 @@ export function Home(props) {
         }, 50)
     }
 
+    function handleCountCart(item_id, type) {
+
+        let indexItem = itensCart.findIndex(item => item.id === item_id)
+        let findItem = itensCart.find(item => item.id === item_id)
+        let prevItens = itensCart
+
+        switch (type) {
+
+            case 'Add':
+                prevItens.push(findItem)
+                setItensCart(prevItens)
+                break;
+
+            case 'Remove':
+                itensCart.splice(indexItem, 1)
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
     function HandlerBottomSheet() {
         props.ChangeSheet(false)
         setIsOpen(false)
@@ -65,7 +94,7 @@ export function Home(props) {
                     </Text>
                 </View>
                 <View className='absolute right-5 top-8'>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Cart', itensCart)} activeOpacity={0.7} >
+                    <TouchableOpacity onPress={() => props.navigation.navigate('Cart', { itensCart: itensCart, handleCountCart })} activeOpacity={0.7} >
                         <View className='bg-lime-400 flex-row space-x-2 w-14 h-10 rounded-lg items-center justify-center'>
                             <Feather name="shopping-cart" size={23} color="black" />
                             {itensCart.length != 0 ?
@@ -117,3 +146,7 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
 });
+
+function updateSomeFunction() {
+    throw new Error('Function not implemented.');
+}

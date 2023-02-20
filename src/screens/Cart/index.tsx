@@ -5,7 +5,7 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 export function Cart(props) {
     const [listCart, setListCart] = useState([])
     const [totalCart, setTotalCart] = useState(0)
-    const itensCart = props.route.params
+    const { handleCountCart, itensCart } = props.route.params
 
     useEffect(() => {
         var listCart = itensCart.reduce((a, b) => {
@@ -28,14 +28,17 @@ export function Cart(props) {
 
             case 'increment':
                 setListCart(listCart => listCart.map((item) => item_id === item.id ? { ...item, quantity: item.quantity + 1 } : item))
+                handleCountCart(item_id, "Add")
                 break;
 
             case 'decrement':
                 setListCart(listCart => listCart.map((item) => item_id === item.id ? { ...item, quantity: item.quantity - 1 } : item))
+                handleCountCart(item_id, "Remove")
                 break;
 
             case 'remove':
                 setListCart(listCart.filter(item => item.id !== item_id))
+                handleCountCart(item_id, "Remove")
                 break;
 
             default:
