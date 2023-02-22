@@ -94,7 +94,23 @@ export function Cart(props) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View className='p-5 flex-1 bg-neutral-100'>
+            <View className='flex-1'>
+                <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
+                    <Text className='text-gray-700 font-light text-xs'>Aguardando ser escaneado para identificação da mesa</Text>
+                </View>
+                <View className='flex-1 w-full bg-neutral-900'>
+                    <View className='m-6 flex-row items-center justify-between'>
+                        <Text className='text-white text-base font-semibold'>Seu pedido</Text>
+                        <TouchableOpacity className='border-gray-500 border flex-row rounded-md items-center'>
+                            <Text className='text-gray-300 px-2 py-1'>
+                                Enviar pedido
+                            </Text>
+                            <Ionicons name="arrow-forward" style={{ marginRight: 4 }} size={20} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+            {/* <View className='p-5 flex-1 bg-neutral-100'>
                 {listCart.length != 0 ? <FlatList
                     style={{
                         flexGrow: 0,
@@ -129,7 +145,7 @@ export function Cart(props) {
                         Fazer pedido
                     </Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </>
     );
 }
