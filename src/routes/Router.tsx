@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Home, Tables, Profile, Waiting, Cart, SignIn, WaiterSelection } from '../screens/index'
+import { Home, Search, Profile, Order, Cart, SignIn, WaiterSelection } from '../screens/index'
 import { TabBar } from '../components/TabBar';
 import { useAuth } from '../context/index';;
 
@@ -25,11 +25,11 @@ function TabsNavigation() {
                 children={props => <Home {...props} ChangeSheet={HandlerSheet} />}
             />
             <Tabs.Screen
-                name="Waiting"
-                component={Waiting} />
+                name="Order"
+                component={Order} />
             <Tabs.Screen
-                name="Tables"
-                component={Tables} />
+                name="Search"
+                component={Search} />
             <Tabs.Screen
                 name="Profile"
                 component={Profile} />

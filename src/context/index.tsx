@@ -68,8 +68,6 @@ export const AuthProvider: React.FC = ({ children }) => {
             const AuthAccount = await authAccount({ email, password })
             setAuthAccountData(AuthAccount.data)
             AsyncStorage.setItem('@AuthAccountData', JSON.stringify(AuthAccount.data));
-            const authAccountDataSerialized = await AsyncStorage.getItem('@AuthAccountData');
-            console.log(authAccountDataSerialized)
             return AuthAccount
         } catch (error) {
             console.log(error)

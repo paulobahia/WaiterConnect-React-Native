@@ -40,6 +40,7 @@ export function SignIn({ navigation }) {
     const { control, handleSubmit } = useForm<FormData>()
 
     async function onSubmit(data: FormData) {
+
         setIsLoading(true)
         try {
             const AuthAccount = await signInAccount(data.email, data.password)
@@ -49,7 +50,6 @@ export function SignIn({ navigation }) {
             console.error(error);
             setIsLoading(false)
         }
-
         setIsLoading(false)
     }
 

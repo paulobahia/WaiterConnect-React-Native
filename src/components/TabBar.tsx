@@ -7,7 +7,7 @@ export function TabBar({ navigation, BottomSheet }) {
     return (
         <>
             {!BottomSheet ? <View className='h-28 absolute items-center justify-center left-1 bottom-0'>
-                <View className='bg-slate-900 flex-row w-11/12 rounded-3xl items-center justify-around h-3/5'>
+                <View className='bg-neutral-900 flex-row w-11/12 rounded-3xl items-center justify-around h-3/5'>
                     <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
                         <View className='w-11 h-11 justify-center items-center rounded-full'>
                             <Image
@@ -15,18 +15,18 @@ export function TabBar({ navigation, BottomSheet }) {
                                 source={require('../assets/icons/home.png')} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Waiting')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
                         <View className='w-11 h-11 justify-center items-center rounded-full'>
                             <Image
                                 style={{ width: 24, height: 24 }}
-                                source={require('../assets/icons/time.png')} />
+                                source={require('../assets/icons/search.png')} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Tables')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Order')}>
                         <View className='w-11 h-11 justify-center items-center rounded-full'>
                             <Image
                                 style={{ width: 24, height: 24 }}
-                                source={require('../assets/icons/round-table.png')} />
+                                source={require('../assets/icons/order.png')} />
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>

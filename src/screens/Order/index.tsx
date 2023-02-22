@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export function Waiting() {
+export function Order() {
 
     return (
         <View className='flex-1 justify-center items-center'>
-            <Text>Waiting</Text>
+            <Text>Order</Text>
         </View>
     );
 }
