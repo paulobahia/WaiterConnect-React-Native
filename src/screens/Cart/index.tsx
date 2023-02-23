@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, Modal, Button } from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import Lottie from 'lottie-react-native';
+import Scanner from '../../components/Scanner';
 
 
 export function Cart(props) {
@@ -9,6 +10,11 @@ export function Cart(props) {
     const [totalCart, setTotalCart] = useState(0)
     const [isScan, setIsScan] = useState(false)
     const [isQR, setIsQR] = useState(true)
+
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [data, setData] = useState("");
+
     const { handleCountCart, itensCart } = props.route.params
 
     useEffect(() => {
@@ -50,6 +56,11 @@ export function Cart(props) {
         }
 
     }
+
+    const onCodeScanned = ({ data }) => {
+        console.log(data)
+        setModalVisible(false);
+    };
 
     const CartList = ({ data }) => {
         return (
@@ -103,6 +114,19 @@ export function Cart(props) {
                     </TouchableOpacity>
                 </View>
             </View>
+            <>
+                <Modal
+                    visible={modalVisible}
+                    transparent={true}
+                    animationType="fade"
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View className='flex-1 items-center justify-center bg-gray-200'>
+                        <Scanner onCodeScanned={onCodeScanned} />
+                        <Button title="Cancelar" onPress={() => setModalVisible(false)} />
+                    </View>
+                </Modal>
+            </>
             <View className='flex-1'>
                 <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
                     <View className='flex-row items-center p-2 rounded-md cursor-pointer '>
@@ -115,7 +139,7 @@ export function Cart(props) {
                                 <Text className='px-4 py-2 rounded-r-md  text-gray-100 bg-gray-400'>Nº da Mesa</Text>}
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
                         <Lottie
                             style={{ height: 250 }}
                             autoPlay={true}
