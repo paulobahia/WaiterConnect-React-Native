@@ -19,14 +19,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "plugins": [
-      [
-        "expo-screen-orientation",
-        {
-          "initialOrientation": "DEFAULT"
-        }
-      ]
-    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "",

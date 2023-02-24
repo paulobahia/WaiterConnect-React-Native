@@ -6,15 +6,12 @@ import Scanner from '../../components/Scanner';
 
 
 export function Cart(props) {
+
     const [listCart, setListCart] = useState([])
     const [totalCart, setTotalCart] = useState(0)
-    const [isScan, setIsScan] = useState(false)
-    const [isQR, setIsQR] = useState(true)
-
-
+    const [isScaned, setIsScaned] = useState(false)
+    const [isQRValue, setIsQrValue] = useState('')
     const [modalVisible, setModalVisible] = useState(false);
-    const [data, setData] = useState("");
-
     const { handleCountCart, itensCart } = props.route.params
 
     useEffect(() => {
@@ -31,6 +28,8 @@ export function Cart(props) {
         }, 0)
         setTotalCart(totalCart)
     }, [listCart])
+
+
 
     const handlerItemOfCart = (item_id, type) => {
 
@@ -58,7 +57,8 @@ export function Cart(props) {
     }
 
     const onCodeScanned = ({ data }) => {
-        console.log(data)
+        setIsScaned(true)
+        setIsQrValue(data)
         setModalVisible(false);
     };
 
@@ -121,24 +121,27 @@ export function Cart(props) {
                     animationType="fade"
                     onRequestClose={() => setModalVisible(false)}
                 >
-                    <View className='flex-1 items-center justify-center bg-gray-200'>
+                    <View className='flex-1 justify-center items-center bg-gray-200'>
                         <Scanner onCodeScanned={onCodeScanned} />
-                        <Button title="Cancelar" onPress={() => setModalVisible(false)} />
+                        <Lottie
+                            autoSize
+                            style={{ position: 'absolute' }}
+                            autoPlay
+                            source={require('../../assets/lotties/scanning-qr-code.json')}
+                        />
+                        <TouchableOpacity className='bg-neutral-900 p-3 rounded-full bottom-10 left-10 absolute'>
+                            <Ionicons name="flashlight" size={40} color="white" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setModalVisible(false)} className='bg-neutral-900 p-3 rounded-full flex bottom-10 items-center justify-center right-10 absolute'>
+                            <Ionicons name="close" size={40} color="white" />
+                        </TouchableOpacity>
                     </View>
                 </Modal>
             </>
             <View className='flex-1'>
-                <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
-                    <View className='flex-row items-center p-2 rounded-md cursor-pointer '>
-                        <TouchableOpacity onPress={() => setIsQR(true)}>
-                            {isQR ? <Text className='px-4 py-2 rounded-l-md shadow-inner bg-gray-700  text-gray-100'>Código QR</Text> :
-                                <Text className='px-4 py-2 rounded-l-md shadow-inner bg-gray-400  text-gray-100'>Código QR</Text>}
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setIsQR(false)}>
-                            {!isQR ? <Text className='px-4 py-2 rounded-r-md  text-gray-100 bg-gray-700'>Nº da Mesa</Text> :
-                                <Text className='px-4 py-2 rounded-r-md  text-gray-100 bg-gray-400'>Nº da Mesa</Text>}
-                        </TouchableOpacity>
-                    </View>
+                {isScaned ? <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
+                    <Text className='text-gray-700 font-light text-xs'>Tentar novamente</Text>
+                </View> : <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
                         <Lottie
                             style={{ height: 250 }}
@@ -147,11 +150,11 @@ export function Cart(props) {
                         />
                     </TouchableOpacity>
                     <Text className='text-gray-700 font-light text-xs'>Aguardando ser escaneado para identificação da mesa</Text>
-                </View>
+                </View>}
                 <View className='flex-1 w-full p-3 bg-neutral-900'>
                     <View className='mt-6 flex-row items-center justify-between'>
                         <Text className='text-white text-base font-semibold'>Seu pedido</Text>
-                        {isScan ? <TouchableOpacity className='border-gray-500 border flex-row rounded-md items-center'>
+                        {isScaned ? <TouchableOpacity className='border-gray-500 border flex-row rounded-md items-center'>
                             <Text className='text-gray-300 font-light text-xs px-2 py-1'>
                                 Enviar pedido
                             </Text>
