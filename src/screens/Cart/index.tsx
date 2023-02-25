@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, Modal, Button } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, Modal } from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import Lottie from 'lottie-react-native';
 import Scanner from '../../components/Scanner';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createOrderID, createOrders } from '../../services';
+import { AuthAccountData } from '../../context';
+import { decryptToken } from '../../utils/methods';
 
 
 export function Cart(props) {
@@ -29,8 +33,6 @@ export function Cart(props) {
         setTotalCart(totalCart)
     }, [listCart])
 
-
-
     const handlerItemOfCart = (item_id, type) => {
 
         switch (type) {
@@ -56,11 +58,64 @@ export function Cart(props) {
 
     }
 
-    const onCodeScanned = ({ data }) => {
+    const scanAgain = () => {
+        setIsQrValue("")
+        setIsScaned(false)
+        setModalVisible(true)
+    }
+
+    const onCodeScanned = (data) => {
         setIsScaned(true)
         setIsQrValue(data)
         setModalVisible(false);
     };
+
+    async function createOrder() {
+        const authWaiterDataSerialized = await AsyncStorage.getItem('@AuthWaiterData');
+        var orderResponse = ''
+        if (authWaiterDataSerialized) {
+            const { data }: AuthAccountData = JSON.parse(authWaiterDataSerialized);
+            let token = data.token
+            var tokenValue = decryptToken(token, "userId")
+        }
+
+        let dataOrderId = {
+            userId: tokenValue,
+            tableId: isQRValue
+        }
+
+        await createOrderID(dataOrderId)
+            .then((response) => {
+                orderResponse = response.data
+            })
+            .catch((err) => {
+                console.error(err.response.data);
+            });
+
+        listCart.forEach(element => {
+            if (element != undefined) {
+                let dataOrder = {
+                    quantity: element.quantity,
+                    productsId: element.id,
+                    orderId: orderResponse.id
+                }
+                createOrders(dataOrder)
+                    .then((response) => {
+                        return response.data
+                    })
+                    .catch((err) => {
+                        console.error(err.response.data);
+                    });
+            }
+        });
+
+        setListCart([])
+        setTotalCart(0)
+        setIsQrValue('')
+        setIsScaned(false)
+
+    }
+
 
     const CartList = ({ data }) => {
         return (
@@ -140,7 +195,18 @@ export function Cart(props) {
             </>
             <View className='flex-1'>
                 {isScaned ? <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
-                    <Text className='text-gray-700 font-light text-xs'>Tentar novamente</Text>
+                    <View className='absolute bg-neutral-100 w-10 flex-1 items-center justify-center h-10 rounded-full top-16'>
+                        <Text className='text-gray-700  font-extrabold text-base'>10</Text>
+                    </View>
+                    <Lottie
+                        style={{ height: 250 }}
+                        autoPlay
+                        loop={false}
+                        source={require('../../assets/lotties/book_table.json')}
+                    />
+                    <TouchableOpacity onPress={scanAgain}>
+                        <Text className='px-4 py-2 rounded-md font-normal text-center text-xs bg-gray-300 mt-5 text-neutral-7c00'>Scannear novamente</Text>
+                    </TouchableOpacity>
                 </View> : <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
                         <Lottie
@@ -154,7 +220,7 @@ export function Cart(props) {
                 <View className='flex-1 w-full p-3 bg-neutral-900'>
                     <View className='mt-6 flex-row items-center justify-between'>
                         <Text className='text-white text-base font-semibold'>Seu pedido</Text>
-                        {isScaned ? <TouchableOpacity className='border-gray-500 border flex-row rounded-md items-center'>
+                        {isScaned && listCart.length != 0 ? <TouchableOpacity onPress={() => createOrder()} className='border-gray-500 border flex-row rounded-md items-center'>
                             <Text className='text-gray-300 font-light text-xs px-2 py-1'>
                                 Enviar pedido
                             </Text>

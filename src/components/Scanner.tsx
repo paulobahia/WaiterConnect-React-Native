@@ -13,11 +13,11 @@ export default function Scanner(props) {
             setHasPermission(status === "granted");
         })();
     }, []);
-
-
-    const handleBarCodeScanned = (data: string) => {
-        setScanned(true);
+    
+    //TODO = Validar se o valor que esta chegando contem as informações necessarias.
+    const handleBarCodeScanned = ({ data }) => {
         props.onCodeScanned(data);
+        setScanned(true);
     };
 
     if (hasPermission === null) {

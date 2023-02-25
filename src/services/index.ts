@@ -13,6 +13,14 @@ export const authAccount = (payload): Promise<AuthAccountData> => {
     return http.post('/api/accounts/auth', payload)
 }
 
+export const createOrderID = (payload) => {
+    return http.post('/api/orders/create', payload)
+}
+
+export const createOrders = (payload) => {
+    return http.post('/api/orders', payload)
+}
+
 export const authWaiter = (payload): Promise<AuthWaiterData> => {
     return http.post('/api/users/auth', payload)
 }
