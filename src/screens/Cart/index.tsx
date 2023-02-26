@@ -1,22 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image, Modal } from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import Lottie from 'lottie-react-native';
+import Toast from 'react-native-toast-message';
+
 import Scanner from '../../components/Scanner';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createOrderID, createOrders } from '../../services';
-import { AuthAccountData } from '../../context';
-import { decryptToken } from '../../utils/methods';
+import { getUserId } from '../../utils/methods';
+
 
 
 export function Cart(props) {
 
     const [listCart, setListCart] = useState([])
-    const [totalCart, setTotalCart] = useState(0)
+    // const [totalCart, setTotalCart] = useState(0)
     const [isScaned, setIsScaned] = useState(false)
     const [isQRValue, setIsQrValue] = useState('')
     const [modalVisible, setModalVisible] = useState(false);
-    const { handleCountCart, itensCart } = props.route.params
+    const [isLoading, setIsLoading] = useState(false)
+    const { handleCountCart, itensCart, clearCart } = props.route.params
 
     useEffect(() => {
         var listCart = itensCart.reduce((a, b) => {
@@ -26,12 +28,12 @@ export function Cart(props) {
         setListCart(listCart)
     }, []);
 
-    useEffect(() => {
-        var totalCart = listCart.reduce((prevVal, currentVal) => {
-            return prevVal + currentVal.price * currentVal.quantity
-        }, 0)
-        setTotalCart(totalCart)
-    }, [listCart])
+    // useEffect(() => {
+    //     var totalCart = listCart.reduce((prevVal, currentVal) => {
+    //         return prevVal + currentVal.price * currentVal.quantity
+    //     }, 0)
+    //     setTotalCart(totalCart)
+    // }, [])
 
     const handlerItemOfCart = (item_id, type) => {
 
@@ -71,24 +73,22 @@ export function Cart(props) {
     };
 
     async function createOrder() {
-        const authWaiterDataSerialized = await AsyncStorage.getItem('@AuthWaiterData');
         var orderResponse = ''
-        if (authWaiterDataSerialized) {
-            const { data }: AuthAccountData = JSON.parse(authWaiterDataSerialized);
-            let token = data.token
-            var tokenValue = decryptToken(token, "userId")
-        }
+        let userId
+
+        userId = await getUserId()
 
         let dataOrderId = {
-            userId: tokenValue,
+            userId,
             tableId: isQRValue
         }
-
+        setIsLoading(true)
         await createOrderID(dataOrderId)
             .then((response) => {
                 orderResponse = response.data
             })
             .catch((err) => {
+                setIsLoading(false)
                 console.error(err.response.data);
             });
 
@@ -104,18 +104,22 @@ export function Cart(props) {
                         return response.data
                     })
                     .catch((err) => {
+                        setIsLoading(false)
                         console.error(err.response.data);
                     });
             }
+            
+            setListCart([])
+            clearCart()
+            setIsLoading(false)
+            Toast.show({
+                type: 'success',
+                text1: 'Sucesso',
+                text2: 'Pedido enviado para a cozinha 👨‍🍳'
+            });
+            props.navigation.navigate('Menu')
         });
-
-        setListCart([])
-        setTotalCart(0)
-        setIsQrValue('')
-        setIsScaned(false)
-
     }
-
 
     const CartList = ({ data }) => {
         return (
@@ -194,18 +198,15 @@ export function Cart(props) {
                 </Modal>
             </>
             <View className='flex-1'>
-                {isScaned ? <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
-                    <View className='absolute bg-neutral-100 w-10 flex-1 items-center justify-center h-10 rounded-full top-16'>
-                        <Text className='text-gray-700  font-extrabold text-base'>10</Text>
+                {isScaned ? <View className='flex-1 w-full items-center justify-end bg-neutral-50'>
+                    <View className='absolute h-full items-center justify-center'>
+                        <Image
+                            style={{ width: 300, height: 300 }}
+                            source={require('../../assets/icons/round-table.png')} />
+                        <Text className='text-white absolute font-extrabold text-base'>10</Text>
                     </View>
-                    <Lottie
-                        style={{ height: 250 }}
-                        autoPlay
-                        loop={false}
-                        source={require('../../assets/lotties/book_table.json')}
-                    />
                     <TouchableOpacity onPress={scanAgain}>
-                        <Text className='px-4 py-2 rounded-md font-normal text-center text-xs bg-gray-300 mt-5 text-neutral-7c00'>Scannear novamente</Text>
+                        <Text className='px-4 py-2 mb-5 rounded-md font-normal text-center text-xs bg-gray-300 mt-5 text-neutral-7c00'>Scannear novamente</Text>
                     </TouchableOpacity>
                 </View> : <View className='flex-1 w-full items-center justify-center bg-neutral-50'>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -232,7 +233,7 @@ export function Cart(props) {
                             <Ionicons name="arrow-forward" style={{ marginRight: 4 }} size={20} color="gray" />
                         </TouchableOpacity>}
                     </View>
-                    <FlatList
+                    {!isLoading ? <FlatList
                         style={{
                             flexGrow: 0,
                         }}
@@ -243,7 +244,15 @@ export function Cart(props) {
                             <CartList data={item} />
                         )}
                         keyExtractor={item => item.id}
-                    />
+                    /> : <View className='flex-1 w-full p-3 justify-center items-center bg-neutral-900'>
+                        <View className='bg-white rounded-full p-2'>
+                            <Lottie
+                                style={{ height: 180 }}
+                                autoPlay={true}
+                                source={require('../../assets/lotties/loading.json')}
+                            />
+                        </View>
+                    </View>}
                 </View>
             </View>
         </>

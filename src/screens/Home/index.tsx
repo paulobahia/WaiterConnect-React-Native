@@ -49,6 +49,10 @@ export function Home(props) {
         setItensCart(prevItensCart => [...prevItensCart, item])
     }
 
+    const clearCart = () => {
+        setItensCart([])
+    }
+
     const itemHandlerBottomSheet = (item) => {
         setItemBottomSheet(item)
         handlerSnapPress(0)
@@ -94,7 +98,7 @@ export function Home(props) {
                     </Text>
                 </View>
                 <View className='absolute right-5 top-8'>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Cart', { itensCart: itensCart, handleCountCart })} activeOpacity={0.7} >
+                    <TouchableOpacity onPress={() => props.navigation.navigate('Cart', { itensCart: itensCart, handleCountCart, clearCart })} activeOpacity={0.7} >
                         <View className='bg-lime-400 flex-row space-x-2 w-14 h-10 rounded-lg items-center justify-center'>
                             <Feather name="shopping-cart" size={23} color="black" />
                             {itensCart.length != 0 ?
