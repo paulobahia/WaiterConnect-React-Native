@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import Scanner from '../../components/Scanner';
 import { createOrderID, createOrders } from '../../services';
 import { getUserId } from '../../utils/methods';
+import socket from '../../utils/socket';
 
 
 
@@ -60,6 +61,10 @@ export function Cart(props) {
 
     }
 
+    const onChangeHandler = () => {
+        socket.emit('createdMessage', "Testando WebSocket")
+    }
+
     const scanAgain = () => {
         setIsQrValue("")
         setIsScaned(false)
@@ -109,6 +114,7 @@ export function Cart(props) {
                     });
             }
             
+            onChangeHandler()
             setListCart([])
             clearCart()
             setIsLoading(false)
