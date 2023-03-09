@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 export function ListMenu(props) {
 
     const CardMenu = ({ data }) =>
     (
         <>
-            <View className='p-5'>
+            <View className='px-3 py-2'>
                 <View className='flex-row mt-3 space-x-3 items-center'>
                     <Text className='text-base font-semibold'>{data.name}</Text>
                     <View className='w-full border-neutral-300 mt-1 border-b' />
@@ -14,22 +15,25 @@ export function ListMenu(props) {
                 <FlatList
                     showsHorizontalScrollIndicator={false}
                     data={data.products}
+                    numColumns={2}
                     renderItem={({ item }) =>
                     (
                         <>
-                            <TouchableOpacity delayLongPress={150} onPress={() => props.handlerResult(item)} onLongPress={() => props.handlerBottomResult(item)}>
-                                <View className='mt-5 space-x-3 p-4 w-full flex-row bg-white rounded-xl'>
-                                    <Image
-                                        style={{ width: 80, height: 80 }}
-                                        source={{
-                                            uri: `http://192.168.15.200:3000/uploads/${item.imagePath}`
-                                        }} />
-                                    <View className='justify-between'>
-                                        <View className='space-y-1'>
-                                            <Text className='font-normal text-black text-sm'>{item.name}</Text>
-                                            <Text className='font-normal text-gray-500 text-xs'>{item.description}</Text>
-                                        </View>
-                                        <Text className='font-bold text-base'>R$ {item.price},00</Text>
+                            <TouchableOpacity className='flex-1 mx-2' onPress={() => props.handlerBottomResult(item)}>
+                                <View className='mt-5 flex-1 bg-white rounded-2xl'>
+                                    <Text className='font-semibold text-center my-2 text-black text-sm'>{item.name}</Text>
+                                    <View className='items-center mt-1'>
+                                        <Image
+                                            style={{ width: 80, height: 80 }}
+                                            source={{
+                                                uri: `http://192.168.15.200:3000/uploads/${item.imagePath}`
+                                            }} />
+                                    </View>
+                                    <View className='justify-between mt-1 items-center flex-row'>
+                                        <Text className='font-medium ml-3 text-base'>R$ {item.price},00</Text>
+                                        <TouchableOpacity onPress={() => props.handlerResult(item)} className='bg-neutral-900 p-3 rounded-tl-2xl rounded-br-2xl'>
+                                            <AntDesign name="plus" size={20} color="white" />
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </TouchableOpacity>

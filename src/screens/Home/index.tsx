@@ -7,7 +7,7 @@ import { SheetComponent } from './components/SheetComponent';
 
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, AntDesign, Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 
 export function Home(props) {
@@ -18,7 +18,6 @@ export function Home(props) {
     const isFocused = useIsFocused();
 
     const sheetRef = useRef<BottomSheet>(null)
-    const [isOpen, setIsOpen] = useState(false)
 
     const snapPoints = ['90%']
 
@@ -40,10 +39,7 @@ export function Home(props) {
 
     const handlerSnapPress = useCallback((index) => {
         sheetRef.current?.snapToIndex(index)
-        setTimeout(() => {
-            setIsOpen(true)
-        }, 200)
-    }, [isOpen])
+    }, [])
 
     const itemHandler = (item) => {
         setItensCart(prevItensCart => [...prevItensCart, item])
@@ -54,11 +50,11 @@ export function Home(props) {
     }
 
     const itemHandlerBottomSheet = (item) => {
+        props.ChangeSheet(true)
         setItemBottomSheet(item)
-        handlerSnapPress(0)
         setTimeout(() => {
-            props.ChangeSheet(true)
-        }, 50)
+            handlerSnapPress(0)
+        }, 10)
     }
 
     function handleCountCart(item_id, type) {
@@ -84,11 +80,6 @@ export function Home(props) {
 
     }
 
-    function HandlerBottomSheet() {
-        props.ChangeSheet(false)
-        setIsOpen(false)
-    }
-
     return (
         <GestureHandlerRootView className="flex-1 bg-neutral-200">
             <View className='bg-neutral-900 p-5 rounded-b-3xl'>
@@ -99,7 +90,7 @@ export function Home(props) {
                 </View>
                 <View className='absolute right-5 top-8'>
                     <TouchableOpacity onPress={() => props.navigation.navigate('Cart', { itensCart: itensCart, handleCountCart, clearCart })} activeOpacity={0.7} >
-                        <View className='bg-lime-400 flex-row space-x-2 w-14 h-10 rounded-lg items-center justify-center'>
+                        <View className='bg-white flex-row space-x-2 w-14 h-10 rounded-lg items-center justify-center'>
                             <Feather name="shopping-cart" size={23} color="black" />
                             {itensCart.length != 0 ?
                                 <Text className='text-black text-lg font-bold'>
@@ -109,23 +100,23 @@ export function Home(props) {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.box} className='p-3 w-full rounded-xl mt-20 bg-neutral-600 items-center  flex-row'>
-                    <View className='flex-row justify-start space-x-5 items-center'>
-                        <AntDesign name="search1" size={24} color="#c0c0c0" />
-                        <TextInput cursorColor={"#000"} className='flex w-3/4' placeholderTextColor={'#c0c0c0'} placeholder="Pesquise por algo gostoso..."
+                <View className='py-2 rounded-xl mt-20 items-center flex-row justify-between '>
+                    <View className='flex-row space-x-3'>
+                        <AntDesign name="search1" size={25} color="#c0c0c0" />
+                        <TextInput cursorColor={"#000"} placeholderTextColor={'#c0c0c0'} className="text-white" placeholder="Pesquise por algo gostoso..."
                             underlineColorAndroid="transparent" />
                     </View>
                 </View>
             </View>
-            <View className='mb-3'>
+            {/* <View className='mb-2'>
                 <ListCategories data={categories} />
-            </View>
+            </View> */}
             <ListMenu data={categories} handlerResult={itemHandler} handlerBottomResult={itemHandlerBottomSheet} />
             <BottomSheet
                 ref={sheetRef}
                 snapPoints={snapPoints}
                 enablePanDownToClose={true}
-                onClose={HandlerBottomSheet}
+                onClose={() => props.ChangeSheet(false)}
                 index={-1}
                 style={{ borderRadius: 30, overflow: 'hidden' }}
             >
@@ -135,22 +126,4 @@ export function Home(props) {
             </BottomSheet>
         </GestureHandlerRootView>
     );
-}
-
-const styles = StyleSheet.create({
-    box: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
-    },
-});
-
-function updateSomeFunction() {
-    throw new Error('Function not implemented.');
 }

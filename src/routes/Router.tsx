@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Home, Search, Profile, Order, Cart, SignIn, WaiterSelection } from '../screens/index'
+import { Home, Search, Profile, Order, Cart, SignIn, WaiterSelection, Categories } from '../screens/index'
 import { TabBar } from '../components/TabBar';
 import { useAuth } from '../context/index';;
 
@@ -50,6 +50,7 @@ function AuthStack() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name='Home' component={TabsNavigation} />
+            <Stack.Screen name='Categories' component={Categories} />
             <Stack.Screen name='Cart' component={Cart} />
         </Stack.Navigator>
     )

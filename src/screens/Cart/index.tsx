@@ -9,8 +9,6 @@ import { createOrderID, createOrders } from '../../services';
 import { getUserId } from '../../utils/methods';
 import socket from '../../utils/socket';
 
-
-
 export function Cart(props) {
 
     const [listCart, setListCart] = useState([])
@@ -62,7 +60,7 @@ export function Cart(props) {
     }
 
     const onChangeHandler = () => {
-        socket.emit('createdMessage', "Testando WebSocket")
+        socket.emit('createdMessage', listCart)
     }
 
     const scanAgain = () => {
@@ -113,7 +111,7 @@ export function Cart(props) {
                         console.error(err.response.data);
                     });
             }
-            
+
             onChangeHandler()
             setListCart([])
             clearCart()

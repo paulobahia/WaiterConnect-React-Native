@@ -5,5 +5,6 @@ import { Order } from "./Order"
 import { Cart } from "./Cart"
 import { SignIn } from "./SignIn"
 import { WaiterSelection } from "./WaiterSelection"
+import { Categories } from "./Categories"
 
-export { Home, Search, Profile, Order, Cart, SignIn, WaiterSelection }
+export { Home, Categories, Search, Profile, Order, Cart, SignIn, WaiterSelection }
