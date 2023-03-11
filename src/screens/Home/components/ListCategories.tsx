@@ -23,10 +23,6 @@ export function ListCategories(categories) {
         <View>
             <View className='px-5 pt-5 flex-row justify-between items-center'>
                 <Text className='font-bold text-lg'>Categorias</Text>
-                <TouchableOpacity className='flex-row space-x-1 justify-center items-center'>
-                    <Text className='font-normal mb-1 text-neutral-500 text-sm'>Veja mais</Text>
-                    <AntDesign name="arrowright" size={15} color="#71717a" />
-                </TouchableOpacity>
             </View>
             <FlatList
                 showsHorizontalScrollIndicator={false}

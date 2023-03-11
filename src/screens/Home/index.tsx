@@ -108,9 +108,9 @@ export function Home(props) {
                     </View>
                 </View>
             </View>
-            {/* <View className='mb-2'>
+            <View className='mb-2'>
                 <ListCategories data={categories} />
-            </View> */}
+            </View>
             <ListMenu data={categories} handlerResult={itemHandler} handlerBottomResult={itemHandlerBottomSheet} />
             <BottomSheet
                 ref={sheetRef}

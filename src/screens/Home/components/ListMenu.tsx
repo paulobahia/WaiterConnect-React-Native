@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { Link } from '@react-navigation/native';
 
 export function ListMenu(props) {
 
